@@ -18,6 +18,7 @@ import (
 	"time"
 
 	"github.com/envoyproxy/go-control-plane/envoy/api/v2"
+	"github.com/envoyproxy/go-control-plane/envoy/api/v2/core"
 	"github.com/envoyproxy/go-control-plane/envoy/api/v2/route"
 	"github.com/gogo/protobuf/types"
 	"github.com/google/go-cmp/cmp"
@@ -44,9 +45,23 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -81,6 +96,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*",
 						Domains: []string{"*"},
@@ -92,6 +114,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -134,6 +163,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:80"},
@@ -145,6 +181,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -190,6 +233,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*", // default backend
 						Domains: []string{"*"},
@@ -201,6 +251,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https", // no https for default backend
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -256,6 +313,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:80"},
@@ -267,6 +331,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:443"},
@@ -327,6 +398,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:80"},
@@ -342,6 +420,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:443"},
@@ -408,9 +493,23 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:443"},
@@ -477,6 +576,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:80"},
@@ -492,6 +598,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:443"},
@@ -554,6 +667,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:80"},
@@ -568,6 +688,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -605,6 +732,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*",
 						Domains: []string{"*"},
@@ -616,6 +750,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -653,6 +794,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*",
 						Domains: []string{"*"},
@@ -664,6 +812,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -701,6 +856,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*",
 						Domains: []string{"*"},
@@ -712,6 +874,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -757,6 +926,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "d31bb322ca62bb395acad00b3cbf45a3aa1010ca28dca7cddb4f7db786fa",
 						Domains: []string{"my-very-very-long-service-host-name.subdomain.boring-dept.my.company", "my-very-very-long-service-host-name.subdomain.boring-dept.my.company:80"},
@@ -768,6 +944,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -805,9 +988,23 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http", // expected to be empty, the ingress class is ignored
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 				"ingress_https": {
 					Name: "ingress_https", // expected to be empty, the ingress class is ignored
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -845,6 +1042,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*",
 						Domains: []string{"*"},
@@ -856,6 +1060,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -893,6 +1104,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*",
 						Domains: []string{"*"},
@@ -904,6 +1122,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -942,6 +1167,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*",
 						Domains: []string{"*"},
@@ -953,6 +1185,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -991,6 +1230,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "*",
 						Domains: []string{"*"},
@@ -1002,6 +1248,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -1062,6 +1315,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:80"},
@@ -1088,6 +1348,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -1148,6 +1415,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:80"},
@@ -1174,6 +1448,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -1235,6 +1516,13 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 					VirtualHosts: []route.VirtualHost{{
 						Name:    "www.example.com",
 						Domains: []string{"www.example.com", "www.example.com:80"},
@@ -1261,6 +1549,13 @@ func TestRouteVisit(t *testing.T) {
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},
@@ -1301,9 +1596,23 @@ func TestRouteVisit(t *testing.T) {
 			want: map[string]*v2.RouteConfiguration{
 				"ingress_http": {
 					Name: "ingress_http", // should be blank, no fqdn defined.
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 				"ingress_https": {
 					Name: "ingress_https",
+					RequestHeadersToAdd: []*core.HeaderValueOption{{
+						Header: &core.HeaderValue{
+							Key:   "x-request-start",
+							Value: "%START_TIME(%s.%3f)%",
+						},
+						Append: &types.BoolValue{Value: true},
+					}},
 				},
 			},
 		},

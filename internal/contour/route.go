@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/envoyproxy/go-control-plane/envoy/api/v2"
+	"github.com/envoyproxy/go-control-plane/envoy/api/v2/core"
 	"github.com/envoyproxy/go-control-plane/envoy/api/v2/route"
 	"github.com/gogo/protobuf/proto"
 	"github.com/gogo/protobuf/types"
@@ -100,9 +101,23 @@ type routeVisitor struct {
 func (v *routeVisitor) Visit() map[string]*v2.RouteConfiguration {
 	ingress_http := &v2.RouteConfiguration{
 		Name: "ingress_http",
+		RequestHeadersToAdd: []*core.HeaderValueOption{{
+			Header: &core.HeaderValue{
+				Key:   "x-request-start",
+				Value: "%START_TIME(%s.%3f)%",
+			},
+			Append: &types.BoolValue{Value: true},
+		}},
 	}
 	ingress_https := &v2.RouteConfiguration{
 		Name: "ingress_https",
+		RequestHeadersToAdd: []*core.HeaderValueOption{{
+			Header: &core.HeaderValue{
+				Key:   "x-request-start",
+				Value: "%START_TIME(%s.%3f)%",
+			},
+			Append: &types.BoolValue{Value: true},
+		}},
 	}
 	m := map[string]*v2.RouteConfiguration{
 		ingress_http.Name:  ingress_http,
