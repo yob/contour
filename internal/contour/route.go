@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/envoyproxy/go-control-plane/envoy/api/v2"
+	"github.com/envoyproxy/go-control-plane/envoy/api/v2/core"
 	"github.com/envoyproxy/go-control-plane/envoy/api/v2/route"
 	"github.com/gogo/protobuf/proto"
 	"github.com/gogo/protobuf/types"
@@ -291,6 +292,13 @@ func weightedclusters(services []*dag.Service) *route.WeightedCluster {
 		wc.Clusters = append(wc.Clusters, &route.WeightedCluster_ClusterWeight{
 			Name:   clustername(svc),
 			Weight: &types.UInt32Value{Value: uint32(svc.Weight)},
+			RequestHeadersToAdd: []*core.HeaderValueOption{{
+				Header: &core.HeaderValue{
+					Key:   "x-request-start",
+					Value: "t=%START_TIME(%s.%3f)%",
+				},
+				Append: &types.BoolValue{Value: true},
+			}},
 		})
 	}
 	wc.TotalWeight = &types.UInt32Value{
