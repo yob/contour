@@ -302,6 +302,11 @@ func httpfilter(routename, accessLogPath string) listener.Filter {
 						"name": sv(router),
 					}),
 				),
+				"http_protocol_options": lv(
+					st(map[string]*types.Value{
+						"accept_http_10": bv(true),
+					}),
+				),
 				"use_remote_address": bv(true), // TODO(jbeda) should this ever be false?
 				"access_log":         accesslog(accessLogPath),
 			},
