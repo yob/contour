@@ -295,7 +295,7 @@ func weightedclusters(services []*dag.Service) *route.WeightedCluster {
 			RequestHeadersToAdd: []*core.HeaderValueOption{{
 				Header: &core.HeaderValue{
 					Key:   "x-request-start",
-					Value: "%START_TIME(%s.%3f)%",
+					Value: "t=%START_TIME(%s.%3f)%",
 				},
 				Append: &types.BoolValue{Value: true},
 			}},
