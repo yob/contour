@@ -150,11 +150,26 @@ func SocketAddress(address string, port int) core.Address {
 
 // DownstreamTLSContext creates a new DownstreamTlsContext.
 func DownstreamTLSContext(cert, key []byte, tlsMinProtoVersion auth.TlsParameters_TlsProtocol, alpnProtos ...string) *auth.DownstreamTlsContext {
+	ciphers := []string{
+	  "[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305]",
+	  "[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]",
+	  "ECDHE-ECDSA-AES128-SHA",
+	  "ECDHE-RSA-AES128-SHA",
+	  //"AES128-GCM-SHA256",
+	  //"AES128-SHA",
+	  "ECDHE-ECDSA-AES256-GCM-SHA384",
+	  "ECDHE-RSA-AES256-GCM-SHA384",
+	  "ECDHE-ECDSA-AES256-SHA",
+	  "ECDHE-RSA-AES256-SHA",
+	  //"AES256-GCM-SHA384",
+	  //"AES256-SHA",
+	}
 	return &auth.DownstreamTlsContext{
 		CommonTlsContext: &auth.CommonTlsContext{
 			TlsParams: &auth.TlsParameters{
 				TlsMinimumProtocolVersion: tlsMinProtoVersion,
 				TlsMaximumProtocolVersion: auth.TlsParameters_TLSv1_3,
+				CipherSuites: ciphers,
 			},
 			TlsCertificates: []*auth.TlsCertificate{{
 				CertificateChain: &core.DataSource{
